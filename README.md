@@ -51,7 +51,7 @@ The machines on the internal network are not exposed to the public Internet. Onl
 
 My home IP address (70.160.134.235)
 
-Machines within the network can only be accessed by Local workstation and Jumpbox.
+Machines within the network can only be accessed by Local workstation via the Jumpbox.
 
 The Jumpbox VM was allowed access to the ELK VM.
 Jumpbox VM: IP 10.0.0.4 Local Workstation via SSH IP 70.160.134.235
@@ -104,7 +104,7 @@ These data points are helpful for things like a [Kibana Exploration Activity](ht
 
 ### Using the Playbook
 
-There were the four playbooks used when creating this network.  
+There were four playbooks used when creating this network.  
 
 | Playbook     | Action(s) |
 |----------|----------|
