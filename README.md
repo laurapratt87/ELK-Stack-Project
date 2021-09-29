@@ -127,8 +127,7 @@ SSH into the control node and follow the steps below:
 
 To check if the ELK-SERVER is running, the URL is: http://13.64.78.144:5601/app/kibana. 
 
-If you shut your machines down, and need to run this after restarting your ELK-SERVER VM, it would just need to be run with "http://DYNAMICIP:5601/app/kibana".
-This will only need to be done if you have a dynamic IP as it changes every time you shut down, and restart your machine. 
+If you shut your machines down, and need to run this after restarting your ELK-SERVER VM, it would just need to be run with "http://DYNAMICIP:5601/app/kibana". The DYNAMIC IP will be your ELK-SERVER public IP address. This will only need to be done if you have a dynamic IP as it changes every time you shut down, and restart your machine. 
   
 [Kibana Dashboad Success](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Additional%20Resources/Kibana_Dashboard.PNG)
 
