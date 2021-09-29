@@ -2,7 +2,8 @@
 
 The files in this repository were used to configure the network depicted below.
 
-Diagrams/RedTeam_Network-Diagram.PNG
+![alt text]( https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Diagrams/RedTeam%20Network%20Diagram.png "Diagram")
+
 
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to recreate the entire deployment pictured above. Alternatively, select portions of the playbook file may be used to install only certain pieces of it, such as Filebeat.
 
@@ -52,11 +53,11 @@ A summary of the access policies in place can be found in the table below.
 
 |   Name   | Publicly Accessible | Allowed IP Addresses  |
 |----------|---------------------|-----------------------|
-| Jump Box |        No      |      70.160.134.235        |
-|   Web-1  |        No      |10.0.0.6 & 40.71.92.3       |
-|   Web-2  |        No      |10.0.0.7 & 40.71.92.3       |
-|   Web-3  |        No      |10.0.0.10 & 40.71.92.3      |
-|ELK-Server|        No      |10.1.0.4 & 40.71.92.3       |
+| Jump Box |        Yes          |    70.160.134.235     |
+|   Web-1  |        No           |      10.0.0.4         |
+|   Web-2  |        No           |      10.0.0.4         |
+|   Web-3  |        No           |      10.0.0.4         |
+|ELK-Server|        No           |      10.0.0.4         |
 
 
 ### Elk Configuration
