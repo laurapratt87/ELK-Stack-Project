@@ -4,10 +4,16 @@ The files in this repository were used to configure the network depicted below.
 
 ![alt text]( https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Diagrams/RedTeam%20Network%20Diagram.png "Diagram")
 
-
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to recreate the entire deployment pictured above. Alternatively, select portions of the playbook file may be used to install only certain pieces of it, such as Filebeat.
 
-/etc/ansible/ELK_playbook.yml
+I created an ELK stack that allows the automatation of monitoring the performance of multiple virtual machines in one database.  By using the ELK Server in conjunction with containers, the benefits are:
+
+  - Scalability and Elasticity
+  - Efficiency of Resources
+  - Increased Security
+  - App Isolation
+
+More information about [Cloud Domain, Containers, and the Security Benefits](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Additional%20Resources/Container_Interview_Question.docx).
 
 This document contains the following details:
 - Description of the Topology
@@ -62,85 +68,74 @@ A summary of the access policies in place can be found in the table below.
 
 ### Elk Configuration
 
-Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because the playbook, much like the ones for Filebear and Metricbeat, saved time and remove [some] elements of human error.  
+Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because the playbook, much like the ones for Filebeat and Metricbeat, saved time and remove [some] elements of human error.  
 
-The playbook implements the following tasks:
+[Link to Playbooks and Config Files](https://github.com/laurapratt87/ELK-Stack-Project/tree/main/Ansible).
 
-- Install docker.io
-- name: Install docker.io apt: update_cache: yes name: docker.io state: present
-- Install Python-pip
-- name: Install pip3 apt: force_apt_get: yes name: python3-pip state: present
-- Install: docker
-- name: Install Docker python module pip: name: docker state: present
-- Command: sysctl -w vm.max_map_count=262144
-- Launch docker container: elk
-- name: download and launch a docker elk container docker_container: name: elk image: sebp/elk:761 state: started restart_policy: always published_ports: - - 5601:5601 - 9200:9200 - 5044:5044
+|ELK_Playbook tasks    |
+|----------|
+| Install: docker.io |
+| Install: Python-pip  |
+| Install: docker |
+|Launch docker container: elk|
 
 The following screenshot displays the result of running docker ps after successfully configuring the ELK instance.
 
-Diagrams/dockerps.PNG
+![alt text](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Linux/elk_docker.png "elk container success")
 
 ### Target Machines & Beats
 
 This ELK server is configured to monitor the following machines:
 
-- Web-1 10.0.0.6
+| Name     | Function | IP Address |
+|----------|----------|------------|
+| Web-1    | Server   | 10.0.0.6   |
+| Web-2    | Server   | 10.0.0.7   |
+| Web-3    | Server   | 10.0.0.10  |
 
-- Web-2 10.0.0.7
+We have installed the following Beats on these machines. These Beats allow us to collect the following information from each machine:
 
-We have installed the following Beats on these machines:
+- **Filebeat** can handle audit logs, deprecation logs, gc logs, server logs, and slow logs. 
 
-- Filebeat and Metricbeat
+- **Metricbeat** collects machine metrics. For example, Metricbeat can be used to monitor and analyze system CPU, memory and load.
 
-These Beats allow us to collect the following information from each machine:
-
-- Filebeat can handle audit logs, deprecation logs, gc logs, server logs, and slow logs. 
-
-- Metricbeat collects machine metrics. For example, Metricbeat can be used to monitor and analyze system CPU, memory and load.
+The Kibana dashboard provides lots of system information, including: heatmap, sankey chart, response codes, unique visitors, total requests, etc. 
+These data points are helpful for things like a [Kibana Exploration Activity](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Additional%20Resources/Kibana%20Exploration.docx).
 
 ### Using the Playbook
 
-In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned:
+There were the four playbooks used when creating this network.  
+
+| Playbook     | Action(s) |
+|----------|----------|
+| [pentest_yml](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Ansible/pentest_yml.txt) | This is the initial playbook to add a container to the Jump Box and install docker.io, pip3, Docker python | 
+| [ELK_playbook_yml](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Ansible/ELK_playbook_yml.txt) | This playbook increased the resources for the ELK server, added the container, and installed docker.io, pip3, Docker python  | 
+| [filebeat-playbook_yml](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Ansible/filebeat-playbook_yml.txt) | This playbook pulled the download, config file, and .yml for Filebeat | 
+| [metricbeat-playbook_yml](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Ansible/metricbeat-playbook_yml.txt) | This playbook pulled the download, config file, and .yml for Metricbeat  | 
+
+  - [Playbooks and Config Files](https://github.com/joshblack07/UR-Cyber-Security-ELK-Stack-Project/tree/main/Ansible)
+  
+Since [pentest_yml](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Ansible/pentest_yml.txt) was the playbook created as part of the Cloud Security unit, it would need to be implemented first to have an Ansible control node configured. Assuming you have such a control node provisioned:
 
 SSH into the control node and follow the steps below:
 
-- Copy the playbook file to /etc/ansible .
+- Copy the playbook file to /etc/ansible.
 - Update the host file to include the webservers and ELK server (and IP addresses).
+  [hosts](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Ansible/hosts.txt)
 - Run the playbook, and navigate to command line to check that the installation worked as expected.
-- Playbook: ELK_server.yml Location: /etc/ansible/ELK_server.yml
+- Playbook: [ELK_playbook](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Ansible/ELK_playbook_yml.txt)
 
-/etc/ansible/hosts:
+To check if the ELK-SERVER is running, the URL is: http://13.64.78.144:5601/app/kibana. 
 
-[webservers]
-
-- 10.0.0.6 ansible_python_interpreter=/usr/bin/python3
-
-- 10.0.0.7 ansible_python_interpreter=/usr/bin/python3
-
-[elk]
-
-- 10.1.0.4 ansible_python_interpreter=/usr/bin/python3
-
-To check if the ELK server is running, the URL is: http://13.83.81.121:5601/app/kibana
-http://13.83.81.121:5601/setup.php
+If you shut your machines down, and need to run this after restarting your ELK-SERVER VM, it would just need to be run with http://<your ELK-SERVER public ip>:5601/app/kibana.
+This will only need to be done if you have a dynamic IP as it changes every time you shut down, and restart your machine. 
+  
+[Kibana Dashboad Success](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Additional%20Resources/Kibana_Dashboard.PNG)
 
 ## Bonus
+[Link to Bonus: Commands](https://github.com/laurapratt87/ELK-Stack-Project/blob/main/Linux/Bonus%20Commands.txt)
 
-The following are the specific commands the user will need. Some commands are written generally since the command would be dependent on specific information (username, IP, container name, etc.)
-
-- <sudo docker ps> will display which containers are present and running.
-- <sudo docker container start [container name]> will start the specified container. 
-- Example: sudo docker container start relaxed kapitsa
-- <sudo docker container attach [container name]> will log the user into the specific container. 
-- Example: sudo docker container start relaxed kapitsa
-- <ssh username@IP> will log a user into a new machine as long as it is running and allowing access. 
-- Example: ssh sysadmin@10.2.0.4
-- <ansible-playbook [playbook name].yml> will run the playbook. 
-- Example: ansible-playbook ELK-server.yml
-- <curl https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat >> /etc/ansible/filebeat-config.yml> will pull the Filebeat config file from the specified website.
-- the <nano> command was used to add/edit configuration files, playbooks, hosts, etc. 
-- Example: nano ELK-server.yml
-
-As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc.
-
-
+## Group
+- [Laura Pratt](https://github.com/laurapratt87) 
+- [Josh Black](https://github.com/joshblack07)
+- [Courtney Templeton](https://github.com/cltempleton1127)
