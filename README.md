@@ -95,7 +95,7 @@ This ELK server is configured to monitor the following machines:
 
 We have installed the following Beats on these machines. These Beats allow us to collect the following information from each machine:
 
-- **Filebeat** can handle audit logs, deprecation logs, gc logs, server logs, and slow logs. 
+- **Filebeat** can handle audit logs, deprecation logs, garbage collection logs, server logs, and slow logs. 
 
 - **Metricbeat** collects machine metrics. For example, Metricbeat can be used to monitor and analyze system CPU, memory and load.
 
